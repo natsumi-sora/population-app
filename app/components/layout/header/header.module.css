@@ -1,0 +1,11 @@
+.header {
+    height: fit-content;
+    background-color: #66cdaa;
+    color: #fff;
+    padding: 20px;
+  }
+  
+  .header h1 {
+    font-size: 24px;
+  }
+  
