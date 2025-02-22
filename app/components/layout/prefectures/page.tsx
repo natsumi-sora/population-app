@@ -3,15 +3,9 @@
 import { useState, useEffect } from 'react';
 import { fetchPrefectures } from '@/app/api/api'; // APIからデータを取得
 import styles from './prefectures.module.css';
+import { Prefecture, PrefectureSelectorProps, PrefecturesPageProps } from '../../../types/types'; // types.ts からインポート
 
-// 都道府県データの型
-type Prefecture = { code: number; name: string };
-
-// PrefectureSelectorコンポーネントの型
-interface PrefectureSelectorProps {
-  onSelect: (selected: number[]) => void;
-}
-
+// PrefectureSelectorコンポーネント
 const PrefectureSelector = ({ onSelect }: PrefectureSelectorProps) => {
   const [prefectures, setPrefectures] = useState<Prefecture[]>([]);
   const [selected, setSelected] = useState<number[]>([]);
@@ -51,12 +45,8 @@ const PrefectureSelector = ({ onSelect }: PrefectureSelectorProps) => {
   );
 };
 
-// `PrefecturesPage` コンポーネントの定義
-interface PrefecturesPageProps {
-  onSelect: (selected: number[]) => void;
-}
-
-const PrefecturesPage = ({ onSelect }: PrefecturesPageProps) => {
+// PrefecturesPageコンポーネント
+const PrefecturesPage = ({ onSelect }: PrefecturesPageProps) => {  // ここでPropsを指定
   const [prefectures, setPrefectures] = useState<Prefecture[]>([]);
   const [selectedPrefCodes, setSelectedPrefCodes] = useState<number[]>([]);
 
