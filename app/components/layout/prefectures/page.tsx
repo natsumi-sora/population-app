@@ -26,10 +26,14 @@ export default function PrefectureSelector({ onSelect }: PrefectureSelectorProps
   const handleCheckboxChange = (code: number) => {
     setSelected((prev) => {
       const newSelection = prev.includes(code) ? prev.filter((c) => c !== code) : [...prev, code];
-      onSelect(newSelection);
-      return newSelection;
+      return newSelection;// 状態更新
     });
   };
+
+   // useEffectを使って、selectedが変更されたタイミングでonSelectを呼び出す
+  useEffect(() => {
+    onSelect(selected); // 状態更新後に親コンポーネントのonSelectを呼び出す
+  }, [selected, onSelect]); // selectedが変更された場合に呼び出される
 
   return (
     <div className={styles.grid}>

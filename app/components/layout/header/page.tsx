@@ -5,7 +5,7 @@ const Header = () => {
     return (
       <header className={styles.header}>
         <div>
-         Population graph by prefecture from Yumemi AIP
+         Population graph by prefecture from Yumemi API
         </div>
       </header>
     );

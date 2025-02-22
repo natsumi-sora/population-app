@@ -1,10 +1,21 @@
 .title {
-  color: green;
+  color: rgb(7, 167, 116);
   text-align: center;
 }
+
+
+@media (max-width: 768px) {
+  .title {
+  font-size: larger;
+}}
 
 .source {
   text-align: center;
   margin-top: 40px;
   font-size: 12px;
 }
+
+@media (max-width: 768px) {
+  .source {
+  font-size: x-small;
+}}

@@ -36,9 +36,27 @@ export const fetchPopulationData = async (prefCode: number) => {
         'X-API-KEY': API_KEY, // APIキーをヘッダーに追加
       },
     });
-     return response.data.result.data[0].data; // 総人口データのみ取得
+    const result = response.data.result.data;
+    return {
+      total: result.find((d: any) => d.label === "総人口")?.data.map((item: any) => ({
+        year: item.year,
+        value: item.value / 10000, // X万人表記にする
+      })) || [],
+      young: result.find((d: any) => d.label === "年少人口")?.data.map((item: any) => ({
+        year: item.year,
+        value: item.value / 10000, // X万人表記にする
+      })) || [],
+      working: result.find((d: any) => d.label === "生産年齢人口")?.data.map((item: any) => ({
+        year: item.year,
+        value: item.value / 10000, // X万人表記にする
+      })) || [],
+      elderly: result.find((d: any) => d.label === "老年人口")?.data.map((item: any) => ({
+        year: item.year,
+        value: item.value / 10000, // X万人表記にする
+      })) || [],
+    };
   } catch (error) {
     console.error('Error fetching population data:', error);
-    return [];
+    return { total: [], young: [], working: [], elderly: [] };
   }
 };

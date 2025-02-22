@@ -6,7 +6,7 @@ const Footer = () => {
     return (
       <footer className={styles.footer}>
         <div >
-         ※test※
+         @practice
         </div>
       </footer>
     );

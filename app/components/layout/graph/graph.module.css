@@ -1,0 +1,37 @@
+.container {
+    text-align: center;
+  }
+  
+  .tabs {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+  
+  .tab {
+    padding: 8px 16px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+  }
+  
+  .tab:hover {
+    background-color: #e0e0e0;
+  }
+  
+  .tab:active {
+    transform: scale(0.95);
+  }
+
+  /*選択中のタブ*/
+  .activeTab {
+    padding: 8px 16px;
+    background-color: #66cdaa;
+    color: white;
+    border: 1px solid #66cdaa;
+    border-radius: 4px;
+  }
+  

@@ -1,20 +1,44 @@
 .grid {
-    display: grid;
-    margin: auto;
-    grid-template-columns: repeat(9, 1fr); /* 横9列 */
-    gap: 8px;
-    max-width: 600px;
+  display: grid;
+  margin: 0 auto;
+  grid-template-columns: repeat(9, 1fr); /* 横9列 */
+  gap: 8px;
+  max-width: 600px;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 画面幅が小さい場合は列数を調整 */
+@media (max-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(6, 1fr); /* タブレット: 6列 */
   }
-  
-  .checkboxLabel {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(4, 1fr); /* スマホ（中）: 4列 */
   }
-  
-  /* checkboxLabel の input に適用 */
-  .checkboxLabel input {
-    cursor: pointer;
+}
+
+@media (max-width: 480px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr); /* スマホ（小）: 2列 */
   }
-  
+}
+
+.checkboxLabel {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+}
+
+/* チェックされていない時のスタイル */
+.checkboxLabel input {
+  cursor: pointer;
+}
+/* ホバー時の背景色 */
+.checkboxLabel:hover {
+  background-color: #e0e0e0;
+}

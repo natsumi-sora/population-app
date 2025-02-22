@@ -5,7 +5,15 @@
     padding: 20px;
   }
   
-  .header h1 {
-    font-size: 24px;
+  .header div {
+    font-size: 20px;
+    font-weight: lighter;
+    opacity: 0.5;
+    text-align: center;
   }
   
+  @media (max-width: 768px) {
+    .header div{
+      font-size: 12px;
+    }
+  }

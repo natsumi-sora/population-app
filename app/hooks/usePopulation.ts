@@ -1,27 +1,28 @@
 import { useEffect, useState } from 'react';
 import { fetchPopulationData } from '../api/api';
 
-interface PopulationData {
-  year: number;
-  value: number;
-}
 
-export const usePopulation = (selectedPrefCodes: number[]) => {
-  const [data, setData] = useState<{ [key: number]: PopulationData[] }>({});
+type PopulationData = { year: number; value: number }[];
+type PopulationResult = { [key: number]: PopulationData };
+
+
+export function usePopulation(prefCodes: number[], category: 'total' | 'young' | 'working' | 'elderly') {
+  const [population, setPopulation] = useState<PopulationResult>({});
 
   useEffect(() => {
-    if (selectedPrefCodes.length === 0) return;
-
     const fetchData = async () => {
-      const newData: { [key: number]: PopulationData[] } = {};
-      for (const prefCode of selectedPrefCodes) {
-        newData[prefCode] = await fetchPopulationData(prefCode);
+      const newPopulation: PopulationResult = {};
+      for (const code of prefCodes) {
+        const data = await fetchPopulationData(code);
+        newPopulation[code] = data[category];
       }
-      setData(newData);
+      setPopulation(newPopulation);
     };
 
-    fetchData();
-  }, [selectedPrefCodes]);
+    if (prefCodes.length > 0) {
+      fetchData();
+    }
+  }, [prefCodes, category]); // category も依存関係に追加
 
-  return data;
-};
+  return population;
+}
