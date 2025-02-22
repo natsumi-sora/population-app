@@ -9,11 +9,14 @@ import { usePopulation } from '../../../hooks/usePopulation';
 import { fetchPrefectures } from '../../../api/api';
 import styles from './graph.module.css';
 
+// 人口カテゴリの型
+type PopulationCategory = 'total' | 'young' | 'working' | 'elderly';
+
 interface GraphProps {
   selectedPrefCodes: number[];
 }
 
-const categories = [
+const categories: { key: PopulationCategory; label: string }[] = [
   { key: 'total', label: '総人口' },
   { key: 'young', label: '年少人口' },
   { key: 'working', label: '生産年齢人口' },
@@ -23,9 +26,8 @@ const categories = [
 
 export default function Graph({ selectedPrefCodes }: GraphProps) {
   const [prefNames, setPrefNames] = useState<{ [key: number]: string }>({});
-  const [activeCategory, setActiveCategory] = useState<'total' | 'young' | 'working' | 'elderly'>('total');
+  const [activeCategory, setActiveCategory] = useState<PopulationCategory>('total');
   const populationData = usePopulation(selectedPrefCodes, activeCategory);
-
 
   // 都道府県コードと名前の対応を取得
    useEffect(() => {
@@ -38,38 +40,48 @@ export default function Graph({ selectedPrefCodes }: GraphProps) {
     });
    }, []);
 
-  // X軸の年数を取得（最初の都道府県のデータを基準に）
-  const years = populationData[selectedPrefCodes[0]]?.map((item) => item.year) || [];
+   // populationData が null の場合に空配列を返す
+  const years = populationData && selectedPrefCodes.length > 0
+  ? populationData[selectedPrefCodes[0]]?.map((item) => item.year) || []
+  : [];
 
   // Highcharts 用のオプション設定
   const options: Highcharts.Options = {
-    title: { text: `人口推移グラフ (${categories.find((c) => c.key === activeCategory)?.label})`, align: 'center' },
-    xAxis: { title: { text: '年' }, categories: years.map(String) }, // APIから取得した年データをX軸に適用
-    yAxis: { 
-      title: { text: '人口数（万人）' } // Y軸の単位をX万人に変更
+    title: {
+      text: `人口推移グラフ (${categories.find((c) => c.key === activeCategory)?.label})`,
+      align: 'center',
+    },
+    xAxis: {
+      title: { text: '年' },
+      categories: years.map(String),
+    },
+    yAxis: {
+      title: { text: '人口数（万人）' },
     },
     series: selectedPrefCodes.map((prefCode: number) => ({
       name: prefNames[prefCode] || `都道府県 ${prefCode}`,
       type: 'line',
-      data: populationData[prefCode]?.map((item) => item.value) || [],
+      data: populationData ? (populationData[prefCode]?.map((item) => item.value) || []) : [],
     })),
     accessibility: {
-      enabled: false // アクセシビリティモジュールを無効化
+      enabled: false,
     },
     responsive: {
-      rules: [{
+      rules: [
+        {
           condition: {
-              maxWidth: 500
+            maxWidth: 500,
           },
           chartOptions: {
-              legend: {
-                  layout: "horizontal",
-                  align: "center",
-                  verticalAlign: "bottom"
-              }
-          }
-      }]
-   }
+            legend: {
+              layout: 'horizontal',
+              align: 'center',
+              verticalAlign: 'bottom',
+            },
+          },
+        },
+      ],
+    },
   };
 
   return (
@@ -79,7 +91,7 @@ export default function Graph({ selectedPrefCodes }: GraphProps) {
           <button
             key={category.key}
             className={activeCategory === category.key ? styles.activeTab : styles.tab}
-            onClick={() => setActiveCategory(category.key as 'total' | 'young' | 'working' | 'elderly')}
+            onClick={() => setActiveCategory(category.key)}
           >
             {category.label}
           </button>
