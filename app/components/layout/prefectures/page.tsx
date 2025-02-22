@@ -51,13 +51,8 @@ const PrefectureSelector = ({ onSelect }: PrefectureSelectorProps) => {
   );
 };
 
-// `PrefecturesPage` コンポーネントの型
-type PrefecturesPageProps = {
-  onSelect: (selected: number[]) => void;
-};
-
 // `PrefecturesPage` コンポーネントの定義
-const PrefecturesPage = ({ onSelect }: PrefecturesPageProps) => {
+const PrefecturesPage = ({ onSelect }: { onSelect: (selected: number[]) => void }) => {
   const [prefectures, setPrefectures] = useState<Prefecture[]>([]);
   const [selectedPrefCodes, setSelectedPrefCodes] = useState<number[]>([]);
 
