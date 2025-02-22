@@ -73,7 +73,7 @@ const PrefecturesPage = ({ onSelect }: { onSelect: (selected: number[]) => void 
   };
 
   return (
-    <div>
+    <div className={styles.select}>
       <h1>都道府県選択</h1>
       <PrefectureSelector onSelect={handleSelect} />
       <p>選択された都道府県名: {selectedPrefNames.join(', ')}</p>
