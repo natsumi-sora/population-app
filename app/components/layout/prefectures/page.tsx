@@ -51,12 +51,13 @@ const PrefectureSelector = ({ onSelect }: PrefectureSelectorProps) => {
   );
 };
 
-// `PrefecturesPage` コンポーネントをエクスポート
-interface PrefecturesPageProps {
+// `PrefecturesPage` コンポーネントの型
+type PrefecturesPageProps = {
   onSelect: (selected: number[]) => void;
-}
+};
 
-export default function PrefecturesPage({ onSelect }: PrefecturesPageProps) {
+// `PrefecturesPage` コンポーネントの定義
+const PrefecturesPage = ({ onSelect }: PrefecturesPageProps) => {
   const [prefectures, setPrefectures] = useState<Prefecture[]>([]);
   const [selectedPrefCodes, setSelectedPrefCodes] = useState<number[]>([]);
 
@@ -83,4 +84,6 @@ export default function PrefecturesPage({ onSelect }: PrefecturesPageProps) {
       <p>選択された都道府県名: {selectedPrefNames.join(', ')}</p>
     </div>
   );
-}
+};
+
+export default PrefecturesPage;
