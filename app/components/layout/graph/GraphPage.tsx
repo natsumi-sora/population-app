@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Graph from './Graph';
 
 export default function GraphPage() {
-  const [selectedPrefCodes, setSelectedPrefCodes] = useState<number[]>([]);
+  const [selectedPrefCodes] = useState<number[]>([]);
 
   return (
     <div>
