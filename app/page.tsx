@@ -2,7 +2,7 @@
 "use client";
 import { useState } from 'react';
 import Prefectures from './components/layout/prefectures/page';
-import Graph from './components/layout/graph/page';
+import GraphPage from './components/layout/graph/page'; 
 import styles from './page.module.css';
 
 export default function Home() {
@@ -15,7 +15,7 @@ export default function Home() {
         <Prefectures onSelect={setSelectedPrefCodes} />
       </section>
       <section>
-        <Graph selectedPrefCodes={selectedPrefCodes} />
+        <GraphPage selectedPrefCodes={selectedPrefCodes} />
       </section>
       <p className={styles.source}>
         出典<br />
