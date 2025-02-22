@@ -1,8 +1,9 @@
 //トップページ
 "use client";
+
 import { useState } from 'react';
 import Prefectures from './components/layout/prefectures/page';
-import GraphPage from './components/layout/graph/page'; 
+import GraphPage from './components/layout/graph/page'; // 修正後のGraphPageをインポート
 import styles from './page.module.css';
 
 export default function Home() {
@@ -15,7 +16,7 @@ export default function Home() {
         <Prefectures onSelect={setSelectedPrefCodes} />
       </section>
       <section>
-        <GraphPage selectedPrefCodes={selectedPrefCodes} />
+        <GraphPage selectedPrefCodes={selectedPrefCodes} /> {/* selectedPrefCodesを渡す */}
       </section>
       <p className={styles.source}>
         出典<br />
