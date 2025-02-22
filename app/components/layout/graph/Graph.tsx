@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
-import { fetchPopulation } from '../../../hooks/usePopulation';
+import { fetchPopulation } from '../../../hooks/usePopulation';  // データ取得関数に修正
 import { fetchPrefectures } from '../../../api/api';
 import styles from './graph.module.css';
 

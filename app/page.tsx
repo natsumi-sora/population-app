@@ -1,11 +1,11 @@
-//トップページ
+// app/page.tsx (トップページ)
+
 "use client";
 
 import { useState } from 'react';
 import Prefectures from './components/layout/prefectures/page';
-import GraphPage from './components/layout/graph/page'; // 修正後の GraphPage をインポート
+import Graph from './components/layout/graph/Graph';  // Graphコンポーネントに変更
 import styles from './page.module.css';
-
 
 export default function Home() {
   const [selectedPrefCodes, setSelectedPrefCodes] = useState<number[]>([]);
@@ -17,7 +17,8 @@ export default function Home() {
         <Prefectures onSelect={setSelectedPrefCodes} />
       </section>
       <section>
-        <GraphPage selectedPrefCodes={selectedPrefCodes} /> {/* 正しく `props` を渡す */}
+        {/* selectedPrefCodes を直接 Graph コンポーネントに渡す */}
+        <Graph selectedPrefCodes={selectedPrefCodes} />
       </section>
       <p className={styles.source}>
         出典<br />

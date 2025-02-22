@@ -1,16 +1,6 @@
-'use client';
+// Next.jsのApp Routerの `page.tsx` はサーバーコンポーネントとして扱う
+import GraphPage from './GraphPage';
 
-import Graph from './Graph';
-
-interface GraphPageProps {
-  selectedPrefCodes: number[];
-}
-
-export default function GraphPage({ selectedPrefCodes }: GraphPageProps) {
-  return (
-    <div>
-      <h1>人口推移グラフ</h1>
-      <Graph selectedPrefCodes={selectedPrefCodes} />
-    </div>
-  );
+export default function Page() {
+  return <GraphPage />;
 }
