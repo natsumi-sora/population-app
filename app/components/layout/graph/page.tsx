@@ -12,8 +12,9 @@ import styles from './graph.module.css';
 // 人口カテゴリの型
 type PopulationCategory = 'total' | 'young' | 'working' | 'elderly';
 
+// `selectedPrefCodes` を undefined も許容
 interface GraphProps {
-  selectedPrefCodes: number[];
+  selectedPrefCodes?: number[];
 }
 
 const categories: { key: PopulationCategory; label: string }[] = [
@@ -24,7 +25,7 @@ const categories: { key: PopulationCategory; label: string }[] = [
 ];
 
 
-export default function Graph({ selectedPrefCodes }: GraphProps) {
+function Graph({ selectedPrefCodes = [] }: GraphProps) {
   const [prefNames, setPrefNames] = useState<{ [key: number]: string }>({});
   const [activeCategory, setActiveCategory] = useState<PopulationCategory>('total');
   const populationData = usePopulation(selectedPrefCodes, activeCategory);
@@ -106,3 +107,6 @@ export default function Graph({ selectedPrefCodes }: GraphProps) {
     </div>
   );
 }
+
+// `export default` の書き方を変更
+export default Graph;
