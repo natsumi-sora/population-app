@@ -2,9 +2,8 @@
 
 import Graph from './Graph';
 
-// `selectedPrefCodes` の型定義を追加
 interface GraphPageProps {
-  selectedPrefCodes: number[];  // selectedPrefCodesはnumber型の配列
+  selectedPrefCodes: number[];
 }
 
 export default function GraphPage({ selectedPrefCodes }: GraphPageProps) {

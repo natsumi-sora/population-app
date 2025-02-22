@@ -1,18 +1,18 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
-import { usePopulation } from '../../../hooks/usePopulation';
+import { fetchPopulation } from '../../../hooks/usePopulation';
 import { fetchPrefectures } from '../../../api/api';
 import styles from './graph.module.css';
 
 // 人口カテゴリの型
 type PopulationCategory = 'total' | 'young' | 'working' | 'elderly';
 
-// `selectedPrefCodes` を undefined も許容
+// `selectedPrefCodes` を受け取る型
 interface GraphProps {
-  selectedPrefCodes?: number[];
+  selectedPrefCodes: number[];
 }
 
 const categories: { key: PopulationCategory; label: string }[] = [
@@ -22,11 +22,27 @@ const categories: { key: PopulationCategory; label: string }[] = [
   { key: 'elderly', label: '老年人口' },
 ];
 
-export default function Graph({ selectedPrefCodes = [] }: GraphProps) {
+export default function Graph({ selectedPrefCodes }: GraphProps) {
   const [prefNames, setPrefNames] = useState<{ [key: number]: string }>({});
   const [activeCategory, setActiveCategory] = useState<PopulationCategory>('total');
-  const populationData = usePopulation(selectedPrefCodes, activeCategory);
+  const [populationData, setPopulationData] = useState<{ [key: number]: { year: number; value: number }[] } | null>(null);
 
+  // 人口データの取得
+  useEffect(() => {
+    async function fetchData() {
+      if (selectedPrefCodes.length === 0) {
+        setPopulationData(null);
+        return;
+      }
+
+      const data = await fetchPopulation(selectedPrefCodes, activeCategory);
+      setPopulationData(data);
+    }
+
+    fetchData();
+  }, [selectedPrefCodes, activeCategory]);
+
+  // 都道府県名の取得
   useEffect(() => {
     fetchPrefectures().then((data) => {
       const nameMap = data.reduce((acc: { [key: number]: string }, pref: { code: number; name: string }) => {
