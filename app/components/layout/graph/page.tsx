@@ -43,7 +43,7 @@ export default function Graph({ selectedPrefCodes }: GraphProps) {
 
   // Highcharts 用のオプション設定
   const options: Highcharts.Options = {
-    title: { text: `人口推移グラフ (${categories.find((c) => c.key === activeCategory)?.label})`, align: 'left' },
+    title: { text: `人口推移グラフ (${categories.find((c) => c.key === activeCategory)?.label})`, align: 'center' },
     xAxis: { title: { text: '年' }, categories: years.map(String) }, // APIから取得した年データをX軸に適用
     yAxis: { 
       title: { text: '人口数（万人）' } // Y軸の単位をX万人に変更
@@ -53,6 +53,9 @@ export default function Graph({ selectedPrefCodes }: GraphProps) {
       type: 'line',
       data: populationData[prefCode]?.map((item) => item.value) || [],
     })),
+    accessibility: {
+      enabled: false // アクセシビリティモジュールを無効化
+    },
     responsive: {
       rules: [{
           condition: {

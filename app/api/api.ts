@@ -2,22 +2,6 @@
 
 import axios from 'axios';
 
-interface PopulationData {
-  year: number;
-  value: number;
-}
-
-interface PopulationResponse {
-  label: string;
-  data: PopulationData[];
-}
-
-interface FetchPopulationResult {
-  total: PopulationData[];
-  young: PopulationData[];
-  working: PopulationData[];
-  elderly: PopulationData[];
-}
 
 const BASE_URL = 'https://yumemi-frontend-engineer-codecheck-api.vercel.app';
 
@@ -46,29 +30,28 @@ export const fetchPrefectures = async () => {
 };
 
 //人口データの取得
-export const fetchPopulationData = async (prefCode: number): Promise<FetchPopulationResult> => {
+export const fetchPopulationData = async (prefCode: number) => {
   try {
     const response = await axios.get( `${BASE_URL}/api/v1/population/composition/perYear?prefCode=${prefCode}`, {
       headers: {
         'X-API-KEY': API_KEY, // APIキーをヘッダーに追加
       },
     });
-    const result = response.data.result as PopulationResponse[];
-
+    const result = response.data.result.data;
     return {
-      total: result.find((d) => d.label === "総人口")?.data.map((item) => ({
+      total: result.find((d: any) => d.label === "総人口")?.data.map((item: any) => ({
         year: item.year,
         value: item.value / 10000, // X万人表記にする
       })) || [],
-      young: result.find((d) => d.label === "年少人口")?.data.map((item) => ({
+      young: result.find((d: any) => d.label === "年少人口")?.data.map((item: any) => ({
         year: item.year,
         value: item.value / 10000, // X万人表記にする
       })) || [],
-      working: result.find((d) => d.label === "生産年齢人口")?.data.map((item) => ({
+      working: result.find((d: any) => d.label === "生産年齢人口")?.data.map((item: any) => ({
         year: item.year,
         value: item.value / 10000, // X万人表記にする
       })) || [],
-      elderly: result.find((d) => d.label === "老年人口")?.data.map((item) => ({
+      elderly: result.find((d: any) => d.label === "老年人口")?.data.map((item: any) => ({
         year: item.year,
         value: item.value / 10000, // X万人表記にする
       })) || [],
