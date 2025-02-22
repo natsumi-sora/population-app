@@ -1,21 +1,20 @@
+// app/components/layout/prefectures/page.tsx
 'use client';
 
 import { useState, useEffect } from 'react';
-import { fetchPrefectures } from '@/app/api/api'; // APIからデータを取得
+import { fetchPrefectures } from '@/app/api/api';
 import styles from './prefectures.module.css';
-import { Prefecture, PrefectureSelectorProps, PrefecturesPageProps } from '../../../types/types'; // types.ts からインポート
+import { Prefecture, PrefectureSelectorProps } from '../../../types/types';
 
 // PrefectureSelectorコンポーネント
 const PrefectureSelector = ({ onSelect }: PrefectureSelectorProps) => {
   const [prefectures, setPrefectures] = useState<Prefecture[]>([]);
   const [selected, setSelected] = useState<number[]>([]);
 
-  // APIから都道府県を取得
   useEffect(() => {
     fetchPrefectures().then(setPrefectures);
   }, []);
 
-  // チェックボックス変更時の処理
   const handleCheckboxChange = (code: number) => {
     setSelected((prev) => {
       const newSelection = prev.includes(code) ? prev.filter((c) => c !== code) : [...prev, code];
@@ -23,7 +22,6 @@ const PrefectureSelector = ({ onSelect }: PrefectureSelectorProps) => {
     });
   };
 
-  // `selected` が変更される度に親に通知
   useEffect(() => {
     onSelect(selected); // 親コンポーネントに選択した都道府県コードを渡す
   }, [selected, onSelect]);
@@ -45,22 +43,19 @@ const PrefectureSelector = ({ onSelect }: PrefectureSelectorProps) => {
   );
 };
 
-// PrefecturesPageコンポーネント
-const PrefecturesPage = ({ onSelect }: PrefecturesPageProps) => {  // ここでPropsを指定
+// PrefecturesPageコンポーネントの型を引数に追加
+const PrefecturesPage = ({ onSelect }: { onSelect: (selected: number[]) => void }) => {
   const [prefectures, setPrefectures] = useState<Prefecture[]>([]);
   const [selectedPrefCodes, setSelectedPrefCodes] = useState<number[]>([]);
 
-  // 都道府県データを取得
   useEffect(() => {
     fetchPrefectures().then(setPrefectures);
   }, []);
 
-  // 都道府県コードを選択された名前に変換
   const selectedPrefNames = prefectures
     .filter((pref) => selectedPrefCodes.includes(pref.code))
     .map((pref) => pref.name);
 
-  // `onSelect` を `PrefectureSelector` に渡す
   const handleSelect = (selected: number[]) => {
     setSelectedPrefCodes(selected);
     onSelect(selected); // 親コンポーネントの onSelect を呼び出す
