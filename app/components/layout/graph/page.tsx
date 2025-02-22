@@ -6,11 +6,12 @@ interface GraphPageProps {
   selectedPrefCodes: number[];
 }
 
-export default function GraphPage({ selectedPrefCodes }: GraphPageProps) {
+export default function GraphPage({ selectedPrefCodes = [] }: GraphPageProps) {
   return (
     <div>
       <h1>人口推移グラフ</h1>
-      <Graph selectedPrefCodes={selectedPrefCodes} />
+      <GraphPage selectedPrefCodes={selectedPrefCodes} />
     </div>
   );
 }
+///useState  13行目をGraphのみ

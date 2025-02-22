@@ -22,7 +22,8 @@ const categories: { key: PopulationCategory; label: string }[] = [
   { key: 'elderly', label: '老年人口' },
 ];
 
-export function Graph({ selectedPrefCodes = [] }: GraphProps) {
+export  function Graph({ selectedPrefCodes = [] }: GraphProps) {
+  //初期値の設定
   const [prefNames, setPrefNames] = useState<{ [key: number]: string }>({});
   const [activeCategory, setActiveCategory] = useState<PopulationCategory>('total');
   const populationData = usePopulation(selectedPrefCodes, activeCategory);
