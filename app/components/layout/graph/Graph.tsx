@@ -22,11 +22,10 @@ const categories: { key: PopulationCategory; label: string }[] = [
   { key: 'elderly', label: '老年人口' },
 ];
 
-const Graph = ({ selectedPrefCodes = [] }: GraphProps) => {
+export default function Graph({ selectedPrefCodes = [] }: GraphProps) {
   const [prefNames, setPrefNames] = useState<{ [key: number]: string }>({});
   const [activeCategory, setActiveCategory] = useState<PopulationCategory>('total');
   const populationData = usePopulation(selectedPrefCodes, activeCategory);
-
 
   useEffect(() => {
     fetchPrefectures().then((data) => {
@@ -102,6 +101,4 @@ const Graph = ({ selectedPrefCodes = [] }: GraphProps) => {
       )}
     </div>
   );
-};
-
-export default Graph;
+}
