@@ -2,6 +2,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import styles from './prefectures.module.css';
 
 interface Prefecture {
   code: number;
@@ -27,9 +28,9 @@ export default function PrefectureSelector({ prefectures, onSelect }: Prefecture
   }, [selected, onSelect]);
 
   return (
-    <div>
+    <div className={styles.grid}>
       {prefectures.map((pref) => (
-        <label key={pref.code}>
+        <label key={pref.code} className={styles.checkboxLabel}>
           <input
             type="checkbox"
             value={pref.code}
