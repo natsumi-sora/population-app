@@ -1,23 +1,29 @@
 // app/page.tsx (トップページ)
 
-"use client";
+// app/page.tsx
+'use client';
 
-import { useState } from 'react';
-import Prefectures from './components/layout/prefectures/page';
-import Graph from './components/layout/graph/Graph';  // Graphコンポーネントに変更
+import { useState, useEffect } from 'react';
+import PrefectureSelector from './components/layout/prefectures/PrefectureSelector';
+import Graph from './components/layout/graph/Graph';
 import styles from './page.module.css';
+import { fetchPrefectures } from '../app/api/api';
 
 export default function Home() {
   const [selectedPrefCodes, setSelectedPrefCodes] = useState<number[]>([]);
+  const [prefectures, setPrefectures] = useState<{ code: number; name: string }[]>([]);
+
+  useEffect(() => {
+    fetchPrefectures().then(setPrefectures);
+  }, []);
 
   return (
     <div>
       <h1 className={styles.title}>都道府県別人口グラフ</h1>
       <section>
-        <Prefectures onSelect={setSelectedPrefCodes} />
+        <PrefectureSelector prefectures={prefectures} onSelect={setSelectedPrefCodes} />
       </section>
       <section>
-        {/* selectedPrefCodes を直接 Graph コンポーネントに渡す */}
         <Graph selectedPrefCodes={selectedPrefCodes} />
       </section>
       <p className={styles.source}>
