@@ -1,4 +1,4 @@
-prefecturesの修正
+
 // Next.jsのApp Routerの `page.tsx` はサーバーコンポーネントとして扱う
 
 import { fetchPrefectures } from '../../../api/api';
