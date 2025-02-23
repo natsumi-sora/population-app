@@ -29,8 +29,8 @@
   /*選択中のタブ*/
   .activeTab {
     padding: 8px 16px;
-    background-color: #66cdaa;
+    background-color: #00b679;
     color: white;
-    border: 1px solid #66cdaa;
+    border: 1px solid #00b679;
     border-radius: 4px;
   }
