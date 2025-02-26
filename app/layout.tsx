@@ -8,7 +8,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="ja">
       <head>
-        <meta charSet='utf-8' name='description' content='Put your description here'/>
         <title>都道府県別人口グラフ</title>
       </head>
       <body>
