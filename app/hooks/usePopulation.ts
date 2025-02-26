@@ -9,9 +9,6 @@ type PopulationCategory = 'total' | 'young' | 'working' | 'elderly';
 // 都道府県データの型
 type Prefecture = { code: number; name: string };
 
-// 都道府県コードごとのデータ構造
-type PopulationResult = { [key: number]: PopulationData };
-
 // 修正: `prefectures` を `Prefecture[]` 型に変更
 export async function fetchPopulation(
   prefectures: Prefecture[], // 変更: `{ code, name }[]` を受け取る
