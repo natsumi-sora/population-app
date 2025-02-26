@@ -6,20 +6,26 @@ type PopulationData = { year: number; value: number }[];
 // 取得する人口カテゴリの型
 type PopulationCategory = 'total' | 'young' | 'working' | 'elderly';
 
+// 都道府県データの型
+type Prefecture = { code: number; name: string };
+
 // 都道府県コードごとのデータ構造
 type PopulationResult = { [key: number]: PopulationData };
 
-// ✅ カスタムフックではなく、単なる非同期関数に変更
-export async function fetchPopulation(prefCodes: number[], category: PopulationCategory): Promise<PopulationResult> {
-  const newPopulation: PopulationResult = {};
+// 修正: `prefectures` を `Prefecture[]` 型に変更
+export async function fetchPopulation(
+  prefectures: Prefecture[], // 変更: `{ code, name }[]` を受け取る
+  category: PopulationCategory
+): Promise<{ [key: number]: { name: string; data: PopulationData } }> {
+  const newPopulation: { [key: number]: { name: string; data: PopulationData } } = {};
 
-  for (const code of prefCodes) {
-    const data = await fetchPopulationData(code);
+  for (const pref of prefectures) {
+    const data = await fetchPopulationData(pref.code);
     if (data && category in data) {
-      newPopulation[code] = data[category];
+      newPopulation[pref.code] = { name: pref.name, data: data[category] };
     } else {
       console.warn(`Data for category "${category}" not found in response`);
-      newPopulation[code] = [];
+      newPopulation[pref.code] = { name: pref.name, data: [] };
     }
   }
 

@@ -32,20 +32,20 @@ PC：9×5列、タブレット: 6列（max-width:1024px）、
 <!-- 言語、フレームワーク、ミドルウェア、インフラの一覧とバージョンを記載 -->
 
 | --------------------- |
-| ├── @types/node@20.17.19
-| ├── @types/react-dom@19.0.3
-| ├── @types/react@19.0.8
-| ├── axios@1.7.9
-| ├── eslint-config-next@15.1.7
-| ├── eslint@9.20.1
-| ├── highcharts-react-official@3.2.1
-| ├── highcharts@12.1.2
-| ├── next@15.1.7
-| ├── prettier@3.5.1
-| ├── react-dom@19.0.0
-| ├── react@19.0.0
-| ├── recharts@2.15.1
-| └typescript@5.7.3
+| ├── @types/node@20.17.19 |
+| ├── @types/react-dom@19.0.3 |
+| ├── @types/react@19.0.8 |
+| ├── axios@1.7.9 |
+| ├── eslint-config-next@15.1.7 |
+| ├── eslint@9.20.1 |
+| ├── highcharts-react-official@3.2.1 |
+| ├── highcharts@12.1.2 |
+| ├── next@15.1.7 |
+| ├── prettier@3.5.1 |
+| ├── react-dom@19.0.0 |
+| ├── react@19.0.0 |
+| ├── recharts@2.15.1 |
+| └typescript@5.7.3 |
 | --------------------- |
 
 その他のパッケージのバージョンは package.json を参照してください
@@ -56,49 +56,49 @@ PC：9×5列、タブレット: 6列（max-width:1024px）、
 |ディレクトリ構成　　　　　　|
 | --------------------- |
 |  
-| ├── README.md
-| ├── app
-| │   ├── api
-| │   │    └── api.ts
-| │   │
-| │   ├── components
-| │   │    └──layout
-| │   │         └──footer
-| │   │         │    └── page.tsx
-| │   │         │    └── footer.module.css
-| │   │         │
-| │   │         └──header
-| │   │         │   └── page.tsx
-| │   │         │   └── header.module.css
-| │   │         │
-| │   │         └──graph
-| │   │         │   └── graph.tsx
-| │   │         │   └── page.tsx
-| │   │         │   └── graph.module.css
-| │   │         │
-| │   │         └──prefectures
-| │   │             └── page.tsx
-| │   │             └── prefectures.module.css
-| │   ├──hooks
-| │   │    └── usePopulation.ts
-| │   ├──styles
-| │   │    └── style.css
-| │   ├── globals.css
-| │   ├── layout.tsx
-| │   ├── page.module.css
-| │   └── page.tsx
-| │ 
-| ├── node_modules/
-| │
-| │── .env.local
-| ├── .gitignore
-| ├── eslint.config.mjs
-| ├── next-env.d.ts
-| ├── next.config.ts
-| ├── package-lock.json
-| ├── package.json
-| └── tsconfig.json
-| --------------------- |                                  |
+| ├── README.md                                |
+| ├── app                                      | 
+| │   ├── api                                  |
+| │   │    └── api.ts                          |
+| │   │                                        |
+| │   ├── components                           |
+| │   │    └──layout                           |
+| │   │         └──footer                      |
+| │   │         │    └── page.tsx              |
+| │   │         │    └── footer.module.css     |
+| │   │         │                              |
+| │   │         └──header                      |
+| │   │         │   └── page.tsx               |
+| │   │         │   └── header.module.css      |
+| │   │         │                              |
+| │   │         └──graph                       |
+| │   │         │   └── graph.tsx              |
+| │   │         │   └── page.tsx               |
+| │   │         │   └── graph.module.css       |
+| │   │         │                              |
+| │   │         └──prefectures                 |
+| │   │             └── page.tsx               |
+| │   │             └── prefectures.module.css |
+| │   ├──hooks                                 |
+| │   │    └── usePopulation.ts                |
+| │   ├──styles                                |
+| │   │    └── style.css                       |
+| │   ├── globals.css                          |
+| │   ├── layout.tsx                           |
+| │   ├── page.module.css                      |
+| │   └── page.tsx                             |
+| │                                            |
+| ├── node_modules/                            |
+| │                                            |
+| │── .env.local                               |
+| ├── .gitignore                               |
+| ├── eslint.config.mjs                        |
+| ├── next-env.d.ts                            |
+| ├── next.config.ts                           |
+| ├── package-lock.json                        |
+| ├── package.json                             |
+| └── tsconfig.json                            |
+| --------------------- |
 
 <p align="right">(<a href="#top">トップへ</a>)</p>
 

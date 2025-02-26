@@ -1,12 +1,13 @@
-//APIリクエスト処理
+"use server"
 
+//APIリクエスト処理
 import axios from 'axios';
 
 
 const BASE_URL = 'https://yumemi-frontend-engineer-codecheck-api.vercel.app';
 
 // 環境変数からAPIキーを取得
-const API_KEY = process.env.NEXT_PUBLIC_YUMEMI_API_KEY;
+const API_KEY = process.env.YUMEMI_API_KEY;
 
 // 都道府県データの型
 interface Prefecture {
@@ -52,7 +53,6 @@ export const fetchPrefectures = async (): Promise<Prefecture[]> => {
     return [];
   }
 };
-
 //人口データの取得
 export const fetchPopulationData = async (prefCode: number): Promise<{
   total: PopulationData[];

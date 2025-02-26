@@ -1,18 +1,15 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
-import { fetchPopulation } from '../../../hooks/usePopulation';  // データ取得関数に修正
-import { fetchPrefectures } from '../../../api/api';
+import { fetchPopulation } from '../../../hooks/usePopulation';
 import styles from './graph.module.css';
 
-// 人口カテゴリの型
 type PopulationCategory = 'total' | 'young' | 'working' | 'elderly';
 
-// `selectedPrefCodes` を受け取る型
 interface GraphProps {
-  selectedPrefCodes: number[];
+  selectedPrefectures: { code: number; name: string }[];
 }
 
 const categories: { key: PopulationCategory; label: string }[] = [
@@ -22,79 +19,58 @@ const categories: { key: PopulationCategory; label: string }[] = [
   { key: 'elderly', label: '老年人口' },
 ];
 
-export default function Graph({ selectedPrefCodes }: GraphProps) {
-  const [prefNames, setPrefNames] = useState<{ [key: number]: string }>({});
+export default function Graph({ selectedPrefectures }: GraphProps) {
   const [activeCategory, setActiveCategory] = useState<PopulationCategory>('total');
-  const [populationData, setPopulationData] = useState<{ [key: number]: { year: number; value: number }[] } | null>(null);
+  const [populationData, setPopulationData] = useState<{ [key: number]: { year: number; value: number }[] }>({});
 
-  // 人口データの取得
   useEffect(() => {
     async function fetchData() {
-      if (selectedPrefCodes.length === 0) {
-        setPopulationData(null);
+      if (selectedPrefectures.length === 0) {
+        setPopulationData({});
         return;
       }
 
-      const data = await fetchPopulation(selectedPrefCodes, activeCategory);
-      setPopulationData(data);
+      const data = await fetchPopulation(selectedPrefectures, activeCategory);
+      setPopulationData(
+        Object.fromEntries(
+          Object.entries(data).map(([code, prefData]) => [Number(code), prefData.data])
+        )
+);
     }
 
     fetchData();
-  }, [selectedPrefCodes, activeCategory]);
+  }, [selectedPrefectures, activeCategory]);
 
-  // 都道府県名の取得
-  useEffect(() => {
-    fetchPrefectures().then((data) => {
-      const nameMap = data.reduce((acc: { [key: number]: string }, pref: { code: number; name: string }) => {
-        acc[pref.code] = pref.name;
-        return acc;
-      }, {});
-      setPrefNames(nameMap);
-    });
-  }, []);
+  // X軸の年リスト
+  const years = useMemo(
+    () => (selectedPrefectures.length > 0 ? populationData[selectedPrefectures[0].code]?.map((item) => item.year) || [] : []),
+    [populationData, selectedPrefectures]
+  );
 
-  const years =
-    populationData && selectedPrefCodes.length > 0
-      ? populationData[selectedPrefCodes[0]]?.map((item) => item.year) || []
-      : [];
-
-  const options: Highcharts.Options = {
-    title: {
-      text: `人口推移グラフ (${categories.find((c) => c.key === activeCategory)?.label})`,
-      align: 'center',
-    },
-    xAxis: {
-      title: { text: '年' },
-      categories: years.map(String),
-    },
-    yAxis: {
-      title: { text: '人口数（万人）' },
-    },
-    series: selectedPrefCodes.map((prefCode: number) => ({
-      name: prefNames[prefCode] || `都道府県 ${prefCode}`,
-      type: 'line',
-      data: populationData ? (populationData[prefCode]?.map((item) => item.value) || []) : [],
-    })),
-    accessibility: {
-      enabled: false,
-    },
-    responsive: {
-      rules: [
-        {
-          condition: {
-            maxWidth: 500,
-          },
-          chartOptions: {
-            legend: {
-              layout: 'horizontal',
-              align: 'center',
-              verticalAlign: 'bottom',
+  const options: Highcharts.Options = useMemo(
+    () => ({
+      title: { text: `人口推移グラフ (${categories.find((c) => c.key === activeCategory)?.label})`, align: 'center' },
+      xAxis: { title: { text: '年' }, categories: years.map(String) },
+      yAxis: { title: { text: '人口数（万人）' } },
+      series: selectedPrefectures.map((pref) => ({
+        name: pref.name,
+        type: 'line',
+        data: populationData[pref.code]?.map((item) => item.value) || [],
+      })),
+      accessibility: { enabled: false },
+      responsive: {
+        rules: [
+          {
+            condition: { maxWidth: 500 },
+            chartOptions: {
+              legend: { layout: 'horizontal', align: 'center', verticalAlign: 'bottom' },
             },
           },
-        },
-      ],
-    },
-  };
+        ],
+      },
+    }),
+    [selectedPrefectures, populationData, activeCategory, years]
+  );
 
   return (
     <div className={styles.container}>
@@ -110,11 +86,7 @@ export default function Graph({ selectedPrefCodes }: GraphProps) {
         ))}
       </div>
 
-      {selectedPrefCodes.length > 0 ? (
-        <HighchartsReact highcharts={Highcharts} options={options} />
-      ) : (
-        <p>都道府県を選択してください</p>
-      )}
+      {selectedPrefectures.length > 0 ? <HighchartsReact highcharts={Highcharts} options={options} /> : <p>都道府県を選択してください</p>}
     </div>
   );
 }
