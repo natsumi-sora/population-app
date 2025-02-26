@@ -8,7 +8,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="ja">
       <head>
+        <meta charSet="utf-8" name="description" content="カリキュラム課題" />
         <title>都道府県別人口グラフ</title>
+        <meta name="robots" content="index, follow" /> {/* SEO対策 */}
       </head>
       <body>
         <Header />
